@@ -8,6 +8,7 @@ import actionlib
 import control_msgs.msg
 from controller import ArmController
 from gazebo_msgs.msg import ModelStates
+from std_msgs.msg import String
 import rospy
 from pyquaternion import Quaternion as PyQuaternion
 import numpy as np
@@ -346,7 +347,9 @@ def set_gripper(value):
 if __name__ == "__main__":
     print("Initializing node of kinematics")
     rospy.init_node("send_joints")
-
+    rospy.loginfo("Waiting for start order...")
+    models = rospy.wait_for_message("start_solver", String, timeout=None)
+    
     controller = ArmController()
     # Create an action client for the gripper
     action_gripper = actionlib.SimpleActionClient(
@@ -355,7 +358,6 @@ if __name__ == "__main__":
     )
     print("Waiting for action of gripper controller")
     action_gripper.wait_for_server()
-
     setstatic_srv = rospy.ServiceProxy("/link_attacher_node/setstatic", SetStatic)
     attach_srv = rospy.ServiceProxy("/link_attacher_node/attach", Attach)
     detach_srv = rospy.ServiceProxy("/link_attacher_node/detach", Attach)
@@ -363,6 +365,8 @@ if __name__ == "__main__":
     attach_srv.wait_for_service()
     detach_srv.wait_for_service()
 
+    
+    
     controller.move_to(*DEFAULT_POS, DEFAULT_QUAT)
 
     print("Waiting for detection of the models")
