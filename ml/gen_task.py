@@ -5,29 +5,46 @@
 # np.random.rand()*2 -1 to generate the pos_x and pos_y
 # * export new dict into task_params.json in the desired location in the ros project. 
 import numpy as np
+import pandas as pd
 import json
+import os
+import math
+from datetime import datetime
 
 task_params = {
- "task_id": "a01",
+ "task_id": "01",
  "brick_type": 2, # index 0 -> 10 defining which type from the brickDict
  "posX": -0.5, # value from -1 to 1, px is calculated as px = posX * (total_x/2)
  "posY": 1, # value from -1 to 1, py is calculated as py = posy * (total_y/2)
  "rotationZ": 45, #in degrees (-180 to 180)
  "color": 2 # index of ColorList (0 -> 9  = len(colorList))
 }
-file_path = "/path/to/file" #TODO: add the file location for the task_params.json
+
+#FIXCONFIG: add the file location for the task_params.json
+file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/" 
+csv_path = "data/runs.csv"
+
+def gen_csv(task_params,file_path):
+    headers = list(task_params.keys())
+    df = pd.DataFrame(columns=headers)
+    df.to_csv(file_path,index=False)
 
 def generate():
-    
-    t = task_params.copy()
-    t['posX'] = np.random.rand()*2 - 1
-    t['posY'] = np.random.rand()*2 - 1
-    t['rotationZ'] = np.random.randint(360) - 180
-    t['color'] = np.random.randint(10)
+    ## Checking if the csv file exists already
+    csv_file = file_path + csv_path
+    if not os.path.exists(csv_file):
+        gen_csv(task_params, csv_file)
 
+    t = task_params.copy()
+    t['task_id'] = datetime.now().strftime('%Y%m%dT%H%M%S')
+    t['posX'] = round(np.random.rand()*2 - 1, 2)
+    t['posY'] = round(np.random.rand()*2 - 1, 2)
+    t['rotationZ'] = round(np.random.randint(360) - 180)
+    t['color'] = np.random.randint(10)
+    t['brick_type'] = np.random.randint(10)
     ts = json.dumps(t)
 
-    with open(file_path, 'w') as f:
+    with open(file_path  + "task_params.json", 'w') as f:
         f.write(ts)
 
 

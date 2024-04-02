@@ -9,7 +9,7 @@ import sys
 import time
 import random
 import numpy as np
-
+import json
 import xml.etree.ElementTree as ET
 
 lego = [] 	#lego = [[name, type, pose, radius], ...]
@@ -59,7 +59,8 @@ task_params = {
 	"color": 2 # index of ColorList (0 -> 9  = len(colorList))
 }
 
-# TODO: implement a read function from a position
+
+# TOD: implement a read function from a position
 def getPose(params):
 	_, dim, = brickDict[brickList[params['brick_type']]]
 	spawnX = spawn_dim[0]
@@ -121,11 +122,20 @@ def spawnLego(params):
 	spawn_model(brickType, pos, name, spawn_name, color)
 	lego.append((name, brickType, pos))
 
+def read_task_params_json():
+	# FIXCONFIG: replace with the path from settings
+	file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/task_params.json"
+	with open(file_path, 'r') as file:
+		data = json.load(file)
+	return data
+
+
 
 #main function setup area and level manager
 def setUpArea(): 	
-	# TODO: Read the parameters (1.0 -> from a json) and send them to spawnaLego 
-	params = task_params
+	#Read the parameters (1.0 -> from a json) and send them to spawnaLego 
+	params = read_task_params_json()
+	# params = task_params
 	brick_type = brickList[params['brick_type']]
 	model_name = f"{brick_type}_0"
 	

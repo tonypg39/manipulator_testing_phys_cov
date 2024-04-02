@@ -17,6 +17,15 @@ from gazebo_ros_link_attacher.srv import Attach, AttachRequest, AttachResponse
 
 PKG_PATH = os.path.dirname(os.path.abspath(__file__))
 
+# SE-FIX add to a utils file
+def update_json_file(file_path,new_d):
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+    data.update(new_d)
+    with open(file_path, 'w') as f:
+        json.dump(data, f)
+
+
 MODELS_INFO = {
     "X1-Y2-Z1": {
         "home": [0.264589, -0.293903, 0.777] 
@@ -346,9 +355,10 @@ def set_gripper(value):
 
 if __name__ == "__main__":
     print("Initializing node of kinematics")
+    # finish_pub = rospy.Publisher('finished_iteration', String, queue_size=10)
     rospy.init_node("send_joints")
     rospy.loginfo("Waiting for start order...")
-    models = rospy.wait_for_message("start_solver", String, timeout=None)
+    rospy.wait_for_message("start_solver", String, timeout=None)
     
     controller = ArmController()
     # Create an action client for the gripper
@@ -416,4 +426,7 @@ if __name__ == "__main__":
     print("Moving to Default Position")
     controller.move_to(*DEFAULT_POS, DEFAULT_QUAT)
     open_gripper()
-    rospy.sleep(0.4)
+    # rospy.sleep(0.1)
+    #FIXCONFIG: add path to the config in utils file
+    file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+    update_json_file(file_path + "status.json", {"state":"finished"})
