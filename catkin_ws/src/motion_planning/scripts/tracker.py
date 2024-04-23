@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import rospy
+import tf2_ros
 from sensor_msgs.msg import JointState
 from std_msgs.msg import String
 import numpy as np
@@ -21,7 +22,7 @@ def read_json_file(file_path):
 	return data
 
 # FIXCONFIG Set this path in the config
-EXPORT_PATH = "/root/UR5-Pick-and-Place-Simulation/ml/dev/data/movements/"
+EXPORT_PATH = "/root/UR5-Pick-and-Place-Simulation/ml/dev/eval_data/"
 CSV_PATH = "/root/UR5-Pick-and-Place-Simulation/ml/dev/data/runs.csv"
 
 class Sampler():
@@ -34,6 +35,7 @@ class Sampler():
         self.count = 0
         self.sampling_count = self.get_sampling_count(self.sample_period)
         self.js_subscriber = rospy.Subscriber("/joint_states", JointState, self.js_handler) 
+        self.tfBuffer = tf2_ros.Buffer()
         self.recording = False
         self.task_id = None
 
@@ -57,9 +59,15 @@ class Sampler():
             return
         if self.count == self.sampling_count:
             self.count = 0 
-            # FIXME: Add the velocity too
-            p = data.position + data.velocity
+            # get the position of the end effector 
+            while not self.tfBuffer.can_transform('base_link', 'robotiq_85_right_inner_knuckle_link', rospy.Time(0)):
+                pass
+            trans = self.tfBuffer.lookup_transform('base_link', 'robotiq_85_right_inner_knuckle_link', rospy.Time(0))
+            ef_pos = trans.transform.translation
+            # Structure of the data is: [EFx,EFy,EFz,(Joint_Angles{6}), (Joint_Velocities{6})]
+            p = [ef_pos.x, ef_pos.y, ef_pos.z] + data.position + data.velocity
             self.D.append(p)
+
             print(p)
         else:
             self.count += 1

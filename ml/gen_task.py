@@ -48,8 +48,27 @@ def generate():
         f.write(ts)
 
 
+def generate_tests_json_file(n, filename):
+    tests = {"tests": []}
+    for i in range(n):
+        t = {}
+        t['task_id'] = str(i)
+        t['posX'] = round(np.random.rand()*2 - 1, 2)
+        t['posY'] = round(np.random.rand()*2 - 1, 2)
+        t['rotationZ'] = round(np.random.randint(360) - 180)
+        t['color'] = np.random.randint(9)
+        t['brick_type'] = np.random.randint(10)
+        tests["tests"].append(t)
+    
+    with open(filename, 'w') as f:
+        f.write(json.dumps(tests))
+
+
+
+
 if __name__ == "__main__":
-    generate()
+    # generate()
+    generate_tests_json_file(20,"/root/UR5-Pick-and-Place-Simulation/ml/dev/eval_tests/tests01.json")
 
 
 
