@@ -10,6 +10,7 @@ cmds_run = [
     {"run": "xterm", "cmd": "roslaunch levelManager lego_world.launch" , "wait": 5},
     {"run": "os", "cmd": "rosservice call /gazebo/unpause_physics '{}'", "wait": 0},
     {"run": "xterm", "cmd": "rosrun levelManager gen_lego_world.py", "wait": 3},
+    {"run": "xterm", "cmd": "rosrun motion_planning get_ef.py", "wait": 0.5},
     {"run": "xterm", "cmd": "rosrun motion_planning tracker.py", "wait":1},
     {"run": "xterm", "cmd": "rosrun motion_planning motion_planning.py", "wait":1}
 ]

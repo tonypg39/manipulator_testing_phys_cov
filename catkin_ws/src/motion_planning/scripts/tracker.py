@@ -34,7 +34,8 @@ class Sampler():
         # recording variables
         self.count = 0
         self.sampling_count = self.get_sampling_count(self.sample_period)
-        self.js_subscriber = rospy.Subscriber("/joint_states", JointState, self.js_handler) 
+        # self.js_subscriber = rospy.Subscriber("/joint_states", JointState, self.js_handler) 
+        self.ef_subscriber = rospy.Subscriber("/end_effector_pos", String, self.ef_handler)
         self.tfBuffer = tf2_ros.Buffer()
         self.recording = False
         self.task_id = None
@@ -54,20 +55,22 @@ class Sampler():
     def stop_record(self):
         self.recording = False
 
+    def ef_handler(self, msg):
+        if not self.recording:
+            return
+        data = msg.data.split('|')
+        p = [float(data[0]), float(data[1]), float(data[2])]   
+        print(p)
+        self.D.append(p)
+    
     def js_handler(self, data):
         if not self.recording:
             return
         if self.count == self.sampling_count:
             self.count = 0 
-            # get the position of the end effector 
-            while not self.tfBuffer.can_transform('base_link', 'robotiq_85_right_inner_knuckle_link', rospy.Time(0)):
-                pass
-            trans = self.tfBuffer.lookup_transform('base_link', 'robotiq_85_right_inner_knuckle_link', rospy.Time(0))
-            ef_pos = trans.transform.translation
             # Structure of the data is: [EFx,EFy,EFz,(Joint_Angles{6}), (Joint_Velocities{6})]
-            p = [ef_pos.x, ef_pos.y, ef_pos.z] + data.position + data.velocity
+            p =  data.position + data.velocity
             self.D.append(p)
-
             print(p)
         else:
             self.count += 1
@@ -78,7 +81,7 @@ class Sampler():
         
         rospy.loginfo(f"The shape of the D is :{self.D} \n {len(self.D)} || {len(self.D[0])}")
         rospy.loginfo(f"The shape of the data is :{ndata.shape}")
-        assert ndata.shape[-1] == 17 and len(ndata.shape) == 2
+        assert ndata.shape[-1] == 3 and len(ndata.shape) == 2
         
         #FIXCONFIG: add path to the config in utils file
         file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
