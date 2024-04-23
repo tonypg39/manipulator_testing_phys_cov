@@ -78,7 +78,7 @@ class Sampler():
         
         rospy.loginfo(f"The shape of the D is :{self.D} \n {len(self.D)} || {len(self.D[0])}")
         rospy.loginfo(f"The shape of the data is :{ndata.shape}")
-        assert ndata.shape[-1] == 14 and len(ndata.shape) == 2
+        assert ndata.shape[-1] == 17 and len(ndata.shape) == 2
         
         #FIXCONFIG: add path to the config in utils file
         file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
