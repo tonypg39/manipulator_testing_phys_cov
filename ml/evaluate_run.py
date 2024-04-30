@@ -29,7 +29,7 @@ def load_test(test):
 
 
 if __name__ == "__main__":
-    tests = read_json_file(tests_file_path + "tests01.json")
+    tests = read_json_file(tests_file_path + "distance.json")
     for t in tests["tests"]:
         # generate()
         load_test(t)
@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
         file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
         while True:
-            d  = read_json_file(file_path + TEST_NAME)
+            d  = read_json_file(file_path + "status.json")
             if d['state'] == "finished":
                 break
             time.sleep(1.5)

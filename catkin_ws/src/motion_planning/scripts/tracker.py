@@ -82,7 +82,7 @@ class Sampler():
              "time_elapsed": time.time() - self.start_record_time,
              "data": self.D
         }
-        with open(data_path, 'w') as f:
+        with open(data_path +f"mov_{self.task_id}.json", 'w') as f:
             f.write(json.dumps(dic_data))
         # save the motion data Y
         # np.save(EXPORT_PATH+f"mov_{self.task_id}.npy",ndata)
