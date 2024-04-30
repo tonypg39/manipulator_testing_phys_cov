@@ -10,6 +10,10 @@ import time
 tests_file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/eval_tests/"
 task_params_file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
 
+
+# Settings
+TEST_NAME = "distance.json"
+
 #SE-FIX Add to a utils file
 def read_json_file(file_path):
     with open(file_path, 'r') as file:
@@ -34,7 +38,7 @@ if __name__ == "__main__":
 
         file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
         while True:
-            d  = read_json_file(file_path + "status.json")
+            d  = read_json_file(file_path + TEST_NAME)
             if d['state'] == "finished":
                 break
             time.sleep(1.5)

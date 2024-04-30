@@ -68,7 +68,7 @@ def generate_tests_json_file(n, filename):
 
 if __name__ == "__main__":
     # generate()
-    generate_tests_json_file(20,"/root/UR5-Pick-and-Place-Simulation/ml/dev/eval_tests/tests01.json")
+    generate_tests_json_file(20,"./ml/dev/eval_tests/tests01.json")
 
 
 

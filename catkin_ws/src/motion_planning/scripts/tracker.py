@@ -6,7 +6,7 @@ from std_msgs.msg import String
 import numpy as np
 import pandas as pd
 import json
-
+import time
 # def read_task_params_json():
 # 	# FIXCONFIG: replace with the path from settings
 #     # SE-FIX: move the method to the one place
@@ -33,22 +33,16 @@ class Sampler():
         self.sample_period = sample_period
         # recording variables
         self.count = 0
-        self.sampling_count = self.get_sampling_count(self.sample_period)
         # self.js_subscriber = rospy.Subscriber("/joint_states", JointState, self.js_handler) 
         self.ef_subscriber = rospy.Subscriber("/end_effector_pos", String, self.ef_handler)
         self.tfBuffer = tf2_ros.Buffer()
+        self.last_joint_state = [0]*14
         self.recording = False
         self.task_id = None
-
-
-    def get_sampling_count(self, frequency):
-        sample_freq = 1 / self.sample_period
-        signal_freq = 50 # FIXCONFIG: Replace this with the actual value
-        # c = max(1, int(sample_freq/signal_freq))
-        c = 50
-        return c
+        self.start_record_time = None
     
     def start_record(self, task_id):
+        self.start_record_time = time.time()
         self.task_id = task_id
         self.recording = True
     
@@ -59,21 +53,16 @@ class Sampler():
         if not self.recording:
             return
         data = msg.data.split('|')
-        p = [float(data[0]), float(data[1]), float(data[2])]   
+        p = [float(data[0]), float(data[1]), float(data[2])] + self.last_joint_state  
         print(p)
+        # Structure of the data is: [EFx,EFy,EFz,(Joint_Angles{7}), (Joint_Velocities{7})
         self.D.append(p)
     
     def js_handler(self, data):
         if not self.recording:
             return
-        if self.count == self.sampling_count:
-            self.count = 0 
-            # Structure of the data is: [EFx,EFy,EFz,(Joint_Angles{6}), (Joint_Velocities{6})]
-            p =  data.position + data.velocity
-            self.D.append(p)
-            print(p)
-        else:
-            self.count += 1
+        self.last_joint_state = data.position + data.velocity
+
     
     def export_data(self):
         # Implement the export data functionality
@@ -81,27 +70,26 @@ class Sampler():
         
         rospy.loginfo(f"The shape of the D is :{self.D} \n {len(self.D)} || {len(self.D[0])}")
         rospy.loginfo(f"The shape of the data is :{ndata.shape}")
-        assert ndata.shape[-1] == 3 and len(ndata.shape) == 2
+        assert ndata.shape[-1] == 17 and len(ndata.shape) == 2
         
         #FIXCONFIG: add path to the config in utils file
         file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+        data_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/eval_data/"
         tp = read_json_file(file_path+"task_params.json")
         assert self.task_id == tp['task_id']
+
+        dic_data = {
+             "time_elapsed": time.time() - self.start_record_time,
+             "data": self.D
+        }
+        with open(data_path, 'w') as f:
+            f.write(json.dumps(dic_data))
         # save the motion data Y
-        np.save(EXPORT_PATH+f"mov_{self.task_id}.npy",ndata)
+        # np.save(EXPORT_PATH+f"mov_{self.task_id}.npy",ndata)
         # save the task parameters X in a csv
-        self.export_csv(tp)
+        # self.export_csv(tp)
     
-    def export_csv(self, task_p=None):
-        if task_p is None:
-            task_p = {
-                "task_id": "01",
-                "brick_type": 2, # index 0 -> 10 defining which type from the brickDict
-                "posX": -0.5, # value from -1 to 1, px is calculated as px = posX * (total_x/2)
-                "posY": 1, # value from -1 to 1, py is calculated as py = posy * (total_y/2)
-                "rotationZ": 45, #in degrees (-180 to 180)
-                "color": 2 # index of ColorList (0 -> 9  = len(colorList))
-            }
+    def export_csv(self, task_p):
         d = pd.read_csv(CSV_PATH)
         print(d.values.shape)
         d.loc[len(d.index)] =  list(task_p.values())
