@@ -53,9 +53,9 @@ class Sampler():
         if not self.recording:
             return
         data = msg.data.split('|')
-        p = [float(data[0]), float(data[1]), float(data[2])] + self.last_joint_state  
+        p = [float(data[0]), float(data[1]), float(data[2]),float(data[3])] + self.last_joint_state  
         print(p)
-        # Structure of the data is: [EFx,EFy,EFz,(Joint_Angles{7}), (Joint_Velocities{7})
+        # Structure of the data is: [EFx,EFy,EFz,vEF,(Joint_Angles{7}), (Joint_Velocities{7})
         self.D.append(p)
     
     def js_handler(self, data):
@@ -70,7 +70,7 @@ class Sampler():
         
         rospy.loginfo(f"The shape of the D is :{self.D} \n {len(self.D)} || {len(self.D[0])}")
         rospy.loginfo(f"The shape of the data is :{ndata.shape}")
-        assert ndata.shape[-1] == 17 and len(ndata.shape) == 2
+        assert ndata.shape[-1] == 18 and len(ndata.shape) == 2
         
         #FIXCONFIG: add path to the config in utils file
         file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
