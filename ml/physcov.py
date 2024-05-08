@@ -54,16 +54,17 @@ def run_evol_matrix(records):
     M = np.zeros((W,L,H),dtype='int8')
     num_covered_cells = []
     te_data = []
-    for r in records:
-        v = get_vel_index(r['data'])
-        pos = get_pos_index(r['data'])
-        M[pos] += 1<<(v)
-        # The velocities are stored in a binary signature: 100 => only the second highest (fastest) velocity range was covered
-        # Potential metric: how many cells have non zero velocity: sum(M>0)
-        cov_cells = sum(M>0)
-        num_covered_cells.append(cov_cells)
-        te_data.append(r['time_elapsed'])
-        # TODO: Add more Metrics to be plot
+    for record in records:
+        for r in record:
+            v = get_vel_index(r['data'])
+            pos = get_pos_index(r['data'])
+            M[pos] += 1<<(v)
+            # The velocities are stored in a binary signature: 100 => only the second highest (fastest) velocity range was covered
+            # Potential metric: how many cells have non zero velocity: sum(M>0)
+            cov_cells = sum(M>0)
+            num_covered_cells.append(cov_cells)
+            te_data.append(r['time_elapsed'])
+            # TODO: Add more Metrics to be plot
 
     d = {
         "matrix": M,
