@@ -26,6 +26,7 @@ def publish_pose():
         if last_pos is not None:
             dpos = math.sqrt((position.x - last_pos.x)**2 + (position.y - last_pos.y)**2 + (position.z - last_pos.z)**2)
             vel = dpos / (1/sampling_freq)
+        last_pos = position
         # compute ==> vel = (pos - last_pos) / (1/sampling_freq)
         pub.publish(f"{position.x}|{position.y}|{position.z}|{vel}")
         rate.sleep()
