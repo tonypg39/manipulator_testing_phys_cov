@@ -1,5 +1,5 @@
 # Do the loop around 1,2,3
-
+import argparse
 from gen_task import generate
 from simulation import main_run, main_kill
 from datetime import datetime
@@ -29,7 +29,14 @@ def load_test(test):
 
 
 if __name__ == "__main__":
-    tests = read_json_file(tests_file_path + "distance.json")
+    if __name__ == "__main__":
+        cmdline = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        cmdline.add_argument('--test_file', default="distance.json")
+        # cmdline.add_argument('--id', default="")
+        flags, unk_args = cmdline.parse_known_args()
+        f_test = flags.test_file
+    
+    tests = read_json_file(tests_file_path + f_test)
     for t in tests["tests"]:
         # generate()
         load_test(t)
