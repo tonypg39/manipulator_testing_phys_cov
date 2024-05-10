@@ -7,7 +7,7 @@ import json
 import matplotlib.pyplot as plt
 
 #FIXCONFIG: Add the path to a config file
-data_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/eval_data/distance/"
+data_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/example_data/"
 
 # FIXCONFIG: Params for the PhysCov computation
 # FIXME: Fix the ranges for the dimensions
@@ -55,16 +55,17 @@ def run_evol_matrix(records):
     num_covered_cells = []
     te_data = []
     for record in records:
-        for r in record:
-            v = get_vel_index(r['data'])
-            pos = get_pos_index(r['data'])
+        cov_cells = 0
+        for r in record['data']:
+            v = get_vel_index(r)
+            pos = get_pos_index(r)
             M[pos] += 1<<(v)
             # The velocities are stored in a binary signature: 100 => only the second highest (fastest) velocity range was covered
             # Potential metric: how many cells have non zero velocity: sum(M>0)
-            cov_cells = sum(M>0)
-            num_covered_cells.append(cov_cells)
-            te_data.append(r['time_elapsed'])
-            # TODO: Add more Metrics to be plot
+            cov_cells += sum(M>0)
+        num_covered_cells.append(cov_cells)
+        te_data.append(record['time_elapsed'])
+        # TODO: Add more Metrics to be plot
 
     d = {
         "matrix": M,
@@ -73,6 +74,16 @@ def run_evol_matrix(records):
     }
     return d
 
+def generate_plots(D):
+    # plot time elapsed
+    te_data = D["Covered Cells"]
+    print(D)
+    plt.scatter(range(len(te_data)), te_data)
+    # plt.xticks([2,4,6,8,10,12,14,16,18,20])
+    plt.xlabel("Test Case #")
+    plt.ylabel("Time Elapsed (seconds)")
+    plt.grid()
+    plt.show()
 
 if __name__ == "__main__":
     te_data = []
@@ -83,12 +94,7 @@ if __name__ == "__main__":
         records.append(d)
 
     D = run_evol_matrix(records)
+    generate_plots(D)
 
 
 # print(te_data)
-# plt.scatter(range(len(te_data)), te_data)
-# plt.xticks([2,4,6,8,10,12,14,16,18,20])
-# plt.xlabel("Test Case #")
-# plt.ylabel("Time Elapsed (seconds)")
-# plt.grid()
-# plt.show()
