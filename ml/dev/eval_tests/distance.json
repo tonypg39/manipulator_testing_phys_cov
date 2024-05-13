@@ -1,0 +1,44 @@
+{
+    "tests": [
+        {"task_id": "a195", "brick_type": 7, "posX": -1.0, "posY": 0.4285714285714286, "rotationZ": 46, "color": 4
+        },
+        {"task_id": "a731", "brick_type": 1, "posX": 0.75, "posY": -1.0, "rotationZ": -163, "color": 3
+        },
+        {"task_id": "a418", "brick_type": 8, "posX": -0.25, "posY": 1.0, "rotationZ": 76, "color": 8
+        },
+        {"task_id": "a812", "brick_type": 3, "posX": -1.0, "posY": -0.4285714285714286, "rotationZ": 1, "color": 5
+        },
+        {"task_id": "a741", "brick_type": 10, "posX": 1.0, "posY": 0.7142857142857142, "rotationZ": -93, "color": 7
+        },
+        {"task_id": "a419", "brick_type": 2, "posX": -1.0, "posY": -0.7142857142857143, "rotationZ": 102, "color": 3
+        },
+        {"task_id": "a990", "brick_type": 7, "posX": -1.0, "posY": -0.4285714285714286, "rotationZ": 6, "color": 1
+        },
+        {"task_id": "a745", "brick_type": 3, "posX": -1.0, "posY": -0.7142857142857143, "rotationZ": -93, "color": 6
+        },
+        {"task_id": "a960", "brick_type": 9, "posX": -1.0, "posY": 1.0, "rotationZ": -18, "color": 7
+        },
+        {"task_id": "a130", "brick_type": 8, "posX": -1.0, "posY": 0.7142857142857142, "rotationZ": 18, "color": 5
+        },
+        {"task_id": "a905", "brick_type": 3, "posX": 0.0, "posY": -1.0, "rotationZ": -92, "color": 6
+        },
+        {"task_id": "a468", "brick_type": 10, "posX": -0.75, "posY": 1.0, "rotationZ": 132, "color": 2
+        },
+        {"task_id": "a707", "brick_type": 3, "posX": -1.0, "posY": 0.1428571428571428, "rotationZ": 139, "color": 3
+        },
+        {"task_id": "a175", "brick_type": 3, "posX": -1.0, "posY": -1.0, "rotationZ": -29, "color": 8
+        },
+        {"task_id": "a232", "brick_type": 8, "posX": -1.0, "posY": 1.0, "rotationZ": -76, "color": 4
+        },
+        {"task_id": "a746", "brick_type": 3, "posX": -0.75, "posY": -1.0, "rotationZ": -176, "color": 5
+        },
+        {"task_id": "a416", "brick_type": 8, "posX": 0.75, "posY": 0.7142857142857142, "rotationZ": 65, "color": 8
+        },
+        {"task_id": "a714", "brick_type": 7, "posX": -1.0, "posY": -1.0, "rotationZ": -136, "color": 6
+        },
+        {"task_id": "a653", "brick_type": 3, "posX": -1.0, "posY": 1.0, "rotationZ": -1, "color": 8
+        },
+        {"task_id": "a314", "brick_type": 7, "posX": -1.0, "posY": 0.7142857142857142, "rotationZ": -46, "color": 1
+        }
+    ]
+}

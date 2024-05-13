@@ -5,7 +5,7 @@ from simulation import main_run, main_kill
 from datetime import datetime
 import json
 import time
-from utils import read_json_file, get_dev_path
+from utils import read_json_file, get_dev_path, get_config
 
 
 dev_path = get_dev_path()

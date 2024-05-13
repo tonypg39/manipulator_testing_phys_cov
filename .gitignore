@@ -6,5 +6,4 @@ logs
 **/__pycache__/
 ml/dev/data
 ml/dev/eval_data
-ml/dev/eval_tests
 ml/.ipynb_checkpoints/
