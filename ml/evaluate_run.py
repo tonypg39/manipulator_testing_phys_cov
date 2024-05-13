@@ -5,20 +5,12 @@ from simulation import main_run, main_kill
 from datetime import datetime
 import json
 import time
-
-# FIXCONFIG: Add connection for the max iterations of the training
-tests_file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/eval_tests/"
-task_params_file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+from utils import read_json_file, get_dev_path
 
 
-# Settings
-TEST_NAME = "distance.json"
-
-#SE-FIX Add to a utils file
-def read_json_file(file_path):
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-    return data
+dev_path = get_dev_path()
+tests_file_path = f"{dev_path}eval_tests/"
+task_params_file_path = dev_path
 
 
 def load_test(test):
@@ -41,9 +33,7 @@ if __name__ == "__main__":
         # generate()
         load_test(t)
         threads = main_run()
-        #FIXCONFIG: add path to the config in utils file
-
-        file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+        file_path = dev_path
         while True:
             d  = read_json_file(file_path + "status.json")
             if d['state'] == "finished":

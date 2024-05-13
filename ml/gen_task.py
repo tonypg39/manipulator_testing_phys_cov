@@ -10,7 +10,7 @@ import json
 import os
 import math
 from datetime import datetime
-
+from utils import get_dev_path
 task_params = {
  "task_id": "01",
  "brick_type": 2, # index 0 -> 10 defining which type from the brickDict
@@ -20,8 +20,8 @@ task_params = {
  "color": 2 # index of ColorList (0 -> 9  = len(colorList))
 }
 
-#FIXCONFIG: add the file location for the task_params.json
-file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/" 
+dev_path = get_dev_path()
+file_path = dev_path 
 csv_path = "data/runs.csv"
 
 def gen_csv(task_params,file_path):

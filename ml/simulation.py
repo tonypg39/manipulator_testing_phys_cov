@@ -1,7 +1,7 @@
 import os
 import threading
 import time
-import json
+from utils import get_dev_path, read_json_file, update_json_file
 # Process
 # - Run all the roslaunch and the rosrun commands
 # (using the xterm wrapper)
@@ -23,22 +23,6 @@ cmds_kill = [
 
 kill_ids = [None]*len(cmds_run)
 
-# SE-FIX Add to a utils file
-def read_json_file(file_path):
-	with open(file_path, 'r') as file:
-		data = json.load(file)
-	return data
-
-# SE-FIX add to a utils file
-def update_json_file(file_path,new_d):
-    with open(file_path, 'r') as f:
-        data = json.load(f)
-    data.update(new_d)
-    with open(file_path, 'w') as f:
-        json.dump(data, f)
-
-
-
 def xterm_wrapper(cmd,k_idx):
     c = f'xterm -fa "Monospace" -fs 12 -e "{cmd}; bash" &'
     pid = os.popen(c).read()
@@ -48,8 +32,7 @@ def xterm_wrapper(cmd,k_idx):
 
 def main_run():
     """Returns the threads for all the processes"""
-    #FIXCONFIG: add path to the config in utils file
-    file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+    file_path = get_dev_path()
 
     update_json_file(file_path+"status.json",{"state":"running"})
     threads = []
@@ -78,7 +61,7 @@ def main_run():
     return threads
 
 def main_kill(threads):
-    #FIXME: Look into a cleaner kill of gazebo that goes through the processes
+    #TODO-DEV: Look into a cleaner kill of gazebo that goes through the processes
     # Kill the gazebo processes
     for c in cmds_kill:
         os.popen(c["cmd"])
@@ -91,9 +74,7 @@ def main_kill(threads):
 
 if __name__=="__main__":
     ts = main_run()
-    #FIXCONFIG: add path to the config in utils file
-
-    file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+    file_path = get_dev_path()
     while True:
         d  = read_json_file(file_path + "status.json")
         if d['state'] == "finished":

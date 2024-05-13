@@ -33,7 +33,7 @@ class Sampler():
         self.sample_period = sample_period
         # recording variables
         self.count = 0
-        # self.js_subscriber = rospy.Subscriber("/joint_states", JointState, self.js_handler) 
+        self.js_subscriber = rospy.Subscriber("/joint_states", JointState, self.js_handler) 
         self.ef_subscriber = rospy.Subscriber("/end_effector_pos", String, self.ef_handler)
         self.tfBuffer = tf2_ros.Buffer()
         self.last_joint_state = [0]*14

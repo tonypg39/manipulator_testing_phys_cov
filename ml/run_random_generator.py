@@ -4,27 +4,17 @@ from gen_task import generate
 from simulation import main_run, main_kill
 import json
 import time
+from utils import get_dev_path, read_json_file
 
-# FIXCONFIG: Add connection for the max iterations of the training
 max_iter = 10
-dev_file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev"
-
-
-#SE-FIX Add to a utils file
-def read_json_file(file_path):
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-    return data
-
+dev_file_path = get_dev_path()
 
 it = 0
 
 while it < max_iter:
     generate()
     ts = main_run()
-    #FIXCONFIG: add path to the config in utils file
-
-    file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+    file_path = dev_file_path
     while True:
         d  = read_json_file(file_path + "status.json")
         if d['state'] == "finished":
