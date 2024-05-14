@@ -13,7 +13,7 @@ def publish_pose():
     pub = rospy.Publisher('end_effector_pos', String, queue_size=10)
 
     # FIXCONFIG : Set the sampling rate to be a parameter
-    sampling_freq = 10.0 
+    sampling_freq = 25.0 
     rate = rospy.Rate(sampling_freq)
     last_pos = None
     vel = 0.0

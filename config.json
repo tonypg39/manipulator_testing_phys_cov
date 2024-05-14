@@ -1,3 +1,4 @@
 {
-    "dev_path": "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+    "dev_path": "/root/UR5-Pick-and-Place-Simulation/ml/dev/",
+    "test_timeout": 120
 }
