@@ -19,6 +19,9 @@ spawn_pos = (-0.35, -0.42, 0.74)  		#center of spawn area
 spawn_dim = (0.32, 0.23)    			#spawning area
 package_name = "levelManager"
 
+DEV_PATH = rospy.get_param('dev_path', '/root/catkin_ws/src/manipulator_testing_phys_cov/ml/dev')
+
+
 brickDict = { \
 		'X1-Y1-Z2': (0,(0.031,0.031,0.057)), \
 		'X1-Y2-Z1': (1,(0.031,0.063,0.038)), \
@@ -123,8 +126,7 @@ def spawnLego(params):
 	lego.append((name, brickType, pos))
 
 def read_task_params_json():
-	# FIXCONFIG: replace with the path from settings
-	file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/task_params.json"
+	file_path = f"{DEV_PATH}task_params.json"
 	with open(file_path, 'r') as file:
 		data = json.load(file)
 	return data

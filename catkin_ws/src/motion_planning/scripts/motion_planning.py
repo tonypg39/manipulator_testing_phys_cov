@@ -16,6 +16,7 @@ from gazebo_ros_link_attacher.srv import SetStatic, SetStaticRequest, SetStaticR
 from gazebo_ros_link_attacher.srv import Attach, AttachRequest, AttachResponse
 
 PKG_PATH = os.path.dirname(os.path.abspath(__file__))
+DEV_PATH = rospy.get_param('dev_path', '/root/catkin_ws/src/manipulator_testing_phys_cov/ml/dev')
 
 # SE-FIX add to a utils file
 def update_json_file(file_path,new_d):
@@ -428,5 +429,5 @@ if __name__ == "__main__":
     open_gripper()
     # rospy.sleep(0.1)
     #FIXCONFIG: add path to the config in utils file
-    file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+    file_path = f"{DEV_PATH}"
     update_json_file(file_path + "status.json", {"state":"finished"})

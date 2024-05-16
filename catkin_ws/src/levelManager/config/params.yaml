@@ -1,0 +1,5 @@
+# Parameter for frequency
+sampling_frequency: 25.0
+
+# Parameter for path
+dev_path: "/root/catkin_ws/src/manipulator_testing_phys_cov/ml/dev"

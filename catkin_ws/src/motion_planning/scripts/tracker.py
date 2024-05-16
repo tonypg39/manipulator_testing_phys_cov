@@ -16,8 +16,10 @@ def read_json_file(file_path):
 	return data
 
 # FIXCONFIG Set this path in the config
-EXPORT_PATH = "/root/UR5-Pick-and-Place-Simulation/ml/dev/eval_data/"
-CSV_PATH = "/root/UR5-Pick-and-Place-Simulation/ml/dev/data/runs.csv"
+DEV_PATH = rospy.get_param('dev_path', '/root/catkin_ws/src/manipulator_testing_phys_cov/ml/dev')
+
+EXPORT_PATH = "f{DEV_PATH}eval_data/"
+CSV_PATH = "f{DEV_PATH}data/runs.csv"
 
 class Sampler():
 
@@ -67,8 +69,8 @@ class Sampler():
         assert ndata.shape[-1] == 18 and len(ndata.shape) == 2
         
         #FIXCONFIG: add path to the config in utils file
-        file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
-        data_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/eval_data/"
+        file_path = "f{DEV_PATH}"
+        data_path = "f{DEV_PATH}eval_data/"
         tp = read_json_file(file_path+"task_params.json")
         assert self.task_id == tp['task_id']
 
@@ -103,7 +105,7 @@ if __name__ == "__main__":
     # print("Got here... after start")
     #FIXCONFIG: add path to the config in utils file
 
-    file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+    file_path = "f{DEV_PATH}"
     while True:
         d  = read_json_file(file_path + "status.json")
         if d['state'] == "finished":
