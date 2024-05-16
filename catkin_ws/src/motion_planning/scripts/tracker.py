@@ -7,13 +7,7 @@ import numpy as np
 import pandas as pd
 import json
 import time
-# def read_task_params_json():
-# 	# FIXCONFIG: replace with the path from settings
-#     # SE-FIX: move the method to the one place
-# 	file_path = "/root/UR5-Pick-and-Place-Simulation/ml/dev/task_params.json"
-# 	with open(file_path, 'r') as file:
-# 		data = json.load(file)
-# 	return data
+
 
 #SE-FIX Add to a utils file
 def read_json_file(file_path):
@@ -53,7 +47,7 @@ class Sampler():
         if not self.recording:
             return
         data = msg.data.split('|')
-        p = [float(data[0]), float(data[1]), float(data[2]),float(data[3])] + self.last_joint_state  
+        p = (float(data[0]), float(data[1]), float(data[2]),float(data[3])) + self.last_joint_state  
         print(p)
         # Structure of the data is: [EFx,EFy,EFz,vEF,(Joint_Angles{7}), (Joint_Velocities{7})
         self.D.append(p)

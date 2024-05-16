@@ -1,0 +1,804 @@
+{
+    "tests": [
+        {
+            "task_id": "a121",
+            "brick_type": 10,
+            "posX": -1.0,
+            "posY": -0.4285714285714286,
+            "rotationZ": 10,
+            "color": 8
+        },
+        {
+            "task_id": "a111",
+            "brick_type": 3,
+            "posX": -0.75,
+            "posY": 1.0,
+            "rotationZ": -43,
+            "color": 9
+        },
+        {
+            "task_id": "a587",
+            "brick_type": 8,
+            "posX": -1.0,
+            "posY": -1.0,
+            "rotationZ": 4,
+            "color": 6
+        },
+        {
+            "task_id": "a457",
+            "brick_type": 7,
+            "posX": -0.75,
+            "posY": 0.1428571428571428,
+            "rotationZ": -41,
+            "color": 6
+        },
+        {
+            "task_id": "a411",
+            "brick_type": 6,
+            "posX": -0.5,
+            "posY": 0.7142857142857142,
+            "rotationZ": -66,
+            "color": 5
+        },
+        {
+            "task_id": "a928",
+            "brick_type": 3,
+            "posX": -0.5,
+            "posY": -0.7142857142857143,
+            "rotationZ": -149,
+            "color": 9
+        },
+        {
+            "task_id": "a709",
+            "brick_type": 9,
+            "posX": -1.0,
+            "posY": 0.7142857142857142,
+            "rotationZ": 74,
+            "color": 9
+        },
+        {
+            "task_id": "a715",
+            "brick_type": 1,
+            "posX": -0.25,
+            "posY": -1.0,
+            "rotationZ": 3,
+            "color": 4
+        },
+        {
+            "task_id": "a203",
+            "brick_type": 7,
+            "posX": 0.5,
+            "posY": -1.0,
+            "rotationZ": 106,
+            "color": 0
+        },
+        {
+            "task_id": "a203",
+            "brick_type": 0,
+            "posX": -1.0,
+            "posY": 0.7142857142857142,
+            "rotationZ": 94,
+            "color": 0
+        },
+        {
+            "task_id": "a527",
+            "brick_type": 3,
+            "posX": 1.0,
+            "posY": 1.0,
+            "rotationZ": -49,
+            "color": 5
+        },
+        {
+            "task_id": "a716",
+            "brick_type": 0,
+            "posX": -0.75,
+            "posY": -1.0,
+            "rotationZ": -175,
+            "color": 1
+        },
+        {
+            "task_id": "a122",
+            "brick_type": 3,
+            "posX": 1.0,
+            "posY": -1.0,
+            "rotationZ": -25,
+            "color": 9
+        },
+        {
+            "task_id": "a587",
+            "brick_type": 3,
+            "posX": 0.75,
+            "posY": -0.7142857142857143,
+            "rotationZ": -142,
+            "color": 6
+        },
+        {
+            "task_id": "a812",
+            "brick_type": 7,
+            "posX": 0.0,
+            "posY": 1.0,
+            "rotationZ": -60,
+            "color": 6
+        },
+        {
+            "task_id": "a871",
+            "brick_type": 7,
+            "posX": 0.25,
+            "posY": -0.7142857142857143,
+            "rotationZ": 23,
+            "color": 4
+        },
+        {
+            "task_id": "a480",
+            "brick_type": 10,
+            "posX": -0.5,
+            "posY": -0.1428571428571429,
+            "rotationZ": -90,
+            "color": 2
+        },
+        {
+            "task_id": "a249",
+            "brick_type": 8,
+            "posX": -1.0,
+            "posY": 0.4285714285714286,
+            "rotationZ": -93,
+            "color": 4
+        },
+        {
+            "task_id": "a178",
+            "brick_type": 10,
+            "posX": 0.0,
+            "posY": -1.0,
+            "rotationZ": -66,
+            "color": 4
+        },
+        {
+            "task_id": "a109",
+            "brick_type": 9,
+            "posX": 0.75,
+            "posY": 1.0,
+            "rotationZ": -8,
+            "color": 9
+        },
+        {
+            "task_id": "a223",
+            "brick_type": 7,
+            "posX": -1.0,
+            "posY": 1.0,
+            "rotationZ": 94,
+            "color": 5
+        },
+        {
+            "task_id": "a714",
+            "brick_type": 3,
+            "posX": 0.5,
+            "posY": 0.7142857142857142,
+            "rotationZ": -124,
+            "color": 6
+        },
+        {
+            "task_id": "a792",
+            "brick_type": 8,
+            "posX": -0.25,
+            "posY": 0.4285714285714286,
+            "rotationZ": -162,
+            "color": 6
+        },
+        {
+            "task_id": "a753",
+            "brick_type": 3,
+            "posX": 1.0,
+            "posY": -0.1428571428571429,
+            "rotationZ": 56,
+            "color": 1
+        },
+        {
+            "task_id": "a973",
+            "brick_type": 7,
+            "posX": -1.0,
+            "posY": -0.7142857142857143,
+            "rotationZ": 87,
+            "color": 3
+        },
+        {
+            "task_id": "a157",
+            "brick_type": 0,
+            "posX": -1.0,
+            "posY": -0.1428571428571429,
+            "rotationZ": 132,
+            "color": 9
+        },
+        {
+            "task_id": "a450",
+            "brick_type": 10,
+            "posX": -0.75,
+            "posY": -1.0,
+            "rotationZ": -29,
+            "color": 0
+        },
+        {
+            "task_id": "a610",
+            "brick_type": 3,
+            "posX": 0.0,
+            "posY": 0.4285714285714286,
+            "rotationZ": -42,
+            "color": 9
+        },
+        {
+            "task_id": "a921",
+            "brick_type": 5,
+            "posX": -0.5,
+            "posY": -1.0,
+            "rotationZ": 124,
+            "color": 8
+        },
+        {
+            "task_id": "a708",
+            "brick_type": 3,
+            "posX": 0.25,
+            "posY": -0.1428571428571429,
+            "rotationZ": 64,
+            "color": 4
+        },
+        {
+            "task_id": "a544",
+            "brick_type": 8,
+            "posX": -1.0,
+            "posY": 0.1428571428571428,
+            "rotationZ": -106,
+            "color": 6
+        },
+        {
+            "task_id": "a551",
+            "brick_type": 3,
+            "posX": -0.5,
+            "posY": 1.0,
+            "rotationZ": 2,
+            "color": 6
+        },
+        {
+            "task_id": "a401",
+            "brick_type": 8,
+            "posX": -0.5,
+            "posY": 1.0,
+            "rotationZ": 151,
+            "color": 3
+        },
+        {
+            "task_id": "a721",
+            "brick_type": 3,
+            "posX": -0.25,
+            "posY": -0.4285714285714286,
+            "rotationZ": -177,
+            "color": 0
+        },
+        {
+            "task_id": "a416",
+            "brick_type": 8,
+            "posX": 0.0,
+            "posY": -0.7142857142857143,
+            "rotationZ": 169,
+            "color": 7
+        },
+        {
+            "task_id": "a539",
+            "brick_type": 8,
+            "posX": -0.75,
+            "posY": 1.0,
+            "rotationZ": -58,
+            "color": 2
+        },
+        {
+            "task_id": "a342",
+            "brick_type": 3,
+            "posX": 0.25,
+            "posY": 1.0,
+            "rotationZ": 40,
+            "color": 7
+        },
+        {
+            "task_id": "a449",
+            "brick_type": 7,
+            "posX": 1.0,
+            "posY": 0.7142857142857142,
+            "rotationZ": 117,
+            "color": 3
+        },
+        {
+            "task_id": "a836",
+            "brick_type": 10,
+            "posX": 0.75,
+            "posY": -1.0,
+            "rotationZ": 88,
+            "color": 4
+        },
+        {
+            "task_id": "a862",
+            "brick_type": 0,
+            "posX": -0.5,
+            "posY": 0.1428571428571428,
+            "rotationZ": 79,
+            "color": 1
+        },
+        {
+            "task_id": "a340",
+            "brick_type": 3,
+            "posX": -1.0,
+            "posY": 1.0,
+            "rotationZ": 125,
+            "color": 4
+        },
+        {
+            "task_id": "a633",
+            "brick_type": 3,
+            "posX": -0.75,
+            "posY": -0.1428571428571429,
+            "rotationZ": -168,
+            "color": 3
+        },
+        {
+            "task_id": "a599",
+            "brick_type": 0,
+            "posX": -0.75,
+            "posY": -0.7142857142857143,
+            "rotationZ": 28,
+            "color": 1
+        },
+        {
+            "task_id": "a503",
+            "brick_type": 3,
+            "posX": 0.25,
+            "posY": -1.0,
+            "rotationZ": 63,
+            "color": 3
+        },
+        {
+            "task_id": "a818",
+            "brick_type": 10,
+            "posX": -1.0,
+            "posY": 1.0,
+            "rotationZ": -131,
+            "color": 1
+        },
+        {
+            "task_id": "a152",
+            "brick_type": 10,
+            "posX": -0.75,
+            "posY": 1.0,
+            "rotationZ": -52,
+            "color": 6
+        },
+        {
+            "task_id": "a816",
+            "brick_type": 10,
+            "posX": -1.0,
+            "posY": 0.7142857142857142,
+            "rotationZ": -71,
+            "color": 9
+        },
+        {
+            "task_id": "a439",
+            "brick_type": 0,
+            "posX": -1.0,
+            "posY": -0.7142857142857143,
+            "rotationZ": 149,
+            "color": 9
+        },
+        {
+            "task_id": "a122",
+            "brick_type": 7,
+            "posX": -0.25,
+            "posY": -1.0,
+            "rotationZ": 44,
+            "color": 4
+        },
+        {
+            "task_id": "a243",
+            "brick_type": 8,
+            "posX": -0.5,
+            "posY": -1.0,
+            "rotationZ": 80,
+            "color": 8
+        },
+        {
+            "task_id": "a361",
+            "brick_type": 3,
+            "posX": -1.0,
+            "posY": -0.1428571428571429,
+            "rotationZ": -55,
+            "color": 4
+        },
+        {
+            "task_id": "a635",
+            "brick_type": 3,
+            "posX": 0.5,
+            "posY": -0.1428571428571429,
+            "rotationZ": 62,
+            "color": 0
+        },
+        {
+            "task_id": "a736",
+            "brick_type": 10,
+            "posX": -0.5,
+            "posY": 0.4285714285714286,
+            "rotationZ": 158,
+            "color": 8
+        },
+        {
+            "task_id": "a156",
+            "brick_type": 3,
+            "posX": -1.0,
+            "posY": -1.0,
+            "rotationZ": 172,
+            "color": 5
+        },
+        {
+            "task_id": "a382",
+            "brick_type": 3,
+            "posX": -1.0,
+            "posY": -0.7142857142857143,
+            "rotationZ": 128,
+            "color": 5
+        },
+        {
+            "task_id": "a622",
+            "brick_type": 3,
+            "posX": -1.0,
+            "posY": -0.4285714285714286,
+            "rotationZ": -150,
+            "color": 3
+        },
+        {
+            "task_id": "a714",
+            "brick_type": 3,
+            "posX": -0.75,
+            "posY": -1.0,
+            "rotationZ": -74,
+            "color": 9
+        },
+        {
+            "task_id": "a110",
+            "brick_type": 8,
+            "posX": 0.25,
+            "posY": 0.7142857142857142,
+            "rotationZ": 50,
+            "color": 3
+        },
+        {
+            "task_id": "a610",
+            "brick_type": 10,
+            "posX": -0.25,
+            "posY": 1.0,
+            "rotationZ": -176,
+            "color": 1
+        },
+        {
+            "task_id": "a916",
+            "brick_type": 3,
+            "posX": -1.0,
+            "posY": 0.1428571428571428,
+            "rotationZ": -47,
+            "color": 0
+        },
+        {
+            "task_id": "a385",
+            "brick_type": 0,
+            "posX": -1.0,
+            "posY": -1.0,
+            "rotationZ": 81,
+            "color": 9
+        },
+        {
+            "task_id": "a681",
+            "brick_type": 9,
+            "posX": -0.25,
+            "posY": 1.0,
+            "rotationZ": 69,
+            "color": 7
+        },
+        {
+            "task_id": "a924",
+            "brick_type": 8,
+            "posX": -1.0,
+            "posY": 1.0,
+            "rotationZ": 88,
+            "color": 5
+        },
+        {
+            "task_id": "a292",
+            "brick_type": 3,
+            "posX": -0.5,
+            "posY": -1.0,
+            "rotationZ": -4,
+            "color": 1
+        },
+        {
+            "task_id": "a267",
+            "brick_type": 10,
+            "posX": -1.0,
+            "posY": -0.7142857142857143,
+            "rotationZ": 76,
+            "color": 1
+        },
+        {
+            "task_id": "a130",
+            "brick_type": 7,
+            "posX": -0.75,
+            "posY": -1.0,
+            "rotationZ": -87,
+            "color": 1
+        },
+        {
+            "task_id": "a347",
+            "brick_type": 0,
+            "posX": -1.0,
+            "posY": -0.4285714285714286,
+            "rotationZ": -137,
+            "color": 7
+        },
+        {
+            "task_id": "a610",
+            "brick_type": 2,
+            "posX": -1.0,
+            "posY": 1.0,
+            "rotationZ": 39,
+            "color": 7
+        },
+        {
+            "task_id": "a503",
+            "brick_type": 9,
+            "posX": -1.0,
+            "posY": 1.0,
+            "rotationZ": -154,
+            "color": 4
+        },
+        {
+            "task_id": "a550",
+            "brick_type": 8,
+            "posX": 1.0,
+            "posY": 1.0,
+            "rotationZ": 92,
+            "color": 5
+        },
+        {
+            "task_id": "a519",
+            "brick_type": 2,
+            "posX": -1.0,
+            "posY": -1.0,
+            "rotationZ": 77,
+            "color": 9
+        },
+        {
+            "task_id": "a429",
+            "brick_type": 0,
+            "posX": -0.25,
+            "posY": -1.0,
+            "rotationZ": 65,
+            "color": 6
+        },
+        {
+            "task_id": "a998",
+            "brick_type": 3,
+            "posX": 0.0,
+            "posY": -0.1428571428571429,
+            "rotationZ": -106,
+            "color": 1
+        },
+        {
+            "task_id": "a220",
+            "brick_type": 8,
+            "posX": -1.0,
+            "posY": 0.7142857142857142,
+            "rotationZ": 33,
+            "color": 7
+        },
+        {
+            "task_id": "a160",
+            "brick_type": 3,
+            "posX": -1.0,
+            "posY": 0.7142857142857142,
+            "rotationZ": 127,
+            "color": 7
+        },
+        {
+            "task_id": "a501",
+            "brick_type": 3,
+            "posX": 0.0,
+            "posY": 1.0,
+            "rotationZ": -176,
+            "color": 3
+        },
+        {
+            "task_id": "a421",
+            "brick_type": 10,
+            "posX": -1.0,
+            "posY": 0.4285714285714286,
+            "rotationZ": 116,
+            "color": 4
+        },
+        {
+            "task_id": "a813",
+            "brick_type": 1,
+            "posX": -1.0,
+            "posY": -0.7142857142857143,
+            "rotationZ": 16,
+            "color": 8
+        },
+        {
+            "task_id": "a225",
+            "brick_type": 7,
+            "posX": -1.0,
+            "posY": 0.4285714285714286,
+            "rotationZ": -99,
+            "color": 3
+        },
+        {
+            "task_id": "a475",
+            "brick_type": 10,
+            "posX": 1.0,
+            "posY": -1.0,
+            "rotationZ": 28,
+            "color": 7
+        },
+        {
+            "task_id": "a993",
+            "brick_type": 9,
+            "posX": -0.75,
+            "posY": 1.0,
+            "rotationZ": -133,
+            "color": 3
+        },
+        {
+            "task_id": "a342",
+            "brick_type": 1,
+            "posX": -1.0,
+            "posY": 0.4285714285714286,
+            "rotationZ": 175,
+            "color": 3
+        },
+        {
+            "task_id": "a519",
+            "brick_type": 7,
+            "posX": -1.0,
+            "posY": -1.0,
+            "rotationZ": 26,
+            "color": 7
+        },
+        {
+            "task_id": "a911",
+            "brick_type": 8,
+            "posX": 0.25,
+            "posY": 1.0,
+            "rotationZ": 107,
+            "color": 1
+        },
+        {
+            "task_id": "a651",
+            "brick_type": 3,
+            "posX": -0.25,
+            "posY": 1.0,
+            "rotationZ": -134,
+            "color": 8
+        },
+        {
+            "task_id": "a210",
+            "brick_type": 2,
+            "posX": 0.5,
+            "posY": -0.7142857142857143,
+            "rotationZ": 128,
+            "color": 8
+        },
+        {
+            "task_id": "a339",
+            "brick_type": 8,
+            "posX": 1.0,
+            "posY": 0.4285714285714286,
+            "rotationZ": 107,
+            "color": 9
+        },
+        {
+            "task_id": "a401",
+            "brick_type": 7,
+            "posX": -1.0,
+            "posY": 0.1428571428571428,
+            "rotationZ": -145,
+            "color": 7
+        },
+        {
+            "task_id": "a780",
+            "brick_type": 7,
+            "posX": -0.75,
+            "posY": 1.0,
+            "rotationZ": -23,
+            "color": 8
+        },
+        {
+            "task_id": "a890",
+            "brick_type": 10,
+            "posX": -0.75,
+            "posY": 0.7142857142857142,
+            "rotationZ": -122,
+            "color": 7
+        },
+        {
+            "task_id": "a329",
+            "brick_type": 2,
+            "posX": -1.0,
+            "posY": -0.7142857142857143,
+            "rotationZ": -147,
+            "color": 9
+        },
+        {
+            "task_id": "a548",
+            "brick_type": 0,
+            "posX": -0.5,
+            "posY": -1.0,
+            "rotationZ": -71,
+            "color": 5
+        },
+        {
+            "task_id": "a542",
+            "brick_type": 10,
+            "posX": -1.0,
+            "posY": -0.1428571428571429,
+            "rotationZ": -89,
+            "color": 3
+        },
+        {
+            "task_id": "a652",
+            "brick_type": 3,
+            "posX": 0.75,
+            "posY": -1.0,
+            "rotationZ": -6,
+            "color": 9
+        },
+        {
+            "task_id": "a857",
+            "brick_type": 7,
+            "posX": 1.0,
+            "posY": -0.4285714285714286,
+            "rotationZ": -82,
+            "color": 9
+        },
+        {
+            "task_id": "a126",
+            "brick_type": 8,
+            "posX": 0.75,
+            "posY": 1.0,
+            "rotationZ": 176,
+            "color": 1
+        },
+        {
+            "task_id": "a246",
+            "brick_type": 10,
+            "posX": -0.75,
+            "posY": 0.4285714285714286,
+            "rotationZ": 176,
+            "color": 8
+        },
+        {
+            "task_id": "a928",
+            "brick_type": 7,
+            "posX": -0.5,
+            "posY": -1.0,
+            "rotationZ": 156,
+            "color": 0
+        },
+        {
+            "task_id": "a951",
+            "brick_type": 3,
+            "posX": -0.75,
+            "posY": -0.4285714285714286,
+            "rotationZ": 61,
+            "color": 9
+        },
+        {
+            "task_id": "a642",
+            "brick_type": 3,
+            "posX": -1.0,
+            "posY": 0.4285714285714286,
+            "rotationZ": -76,
+            "color": 7
+        }
+    ]
+}
