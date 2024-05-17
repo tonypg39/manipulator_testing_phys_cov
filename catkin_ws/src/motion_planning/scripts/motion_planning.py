@@ -6,7 +6,8 @@ import copy
 import json
 import actionlib
 import control_msgs.msg
-from controller import ArmController, NoiseController
+from controller import ArmController
+from injection import NoiseController, add_noise_to_pose
 from gazebo_msgs.msg import ModelStates
 from std_msgs.msg import String
 import rospy
@@ -123,7 +124,7 @@ def get_model_name(gazebo_model_name):
     return gazebo_model_name.replace("lego_", "").split("_", maxsplit=1)[0]
 
 
-def get_legos_pos(vision=False):
+def get_legos_pos(vision=False, noise=True):
     #get legos position reading vision topic
     if vision:
         legos = rospy.wait_for_message("/lego_detections", ModelStates, timeout=None)
@@ -137,7 +138,11 @@ def get_legos_pos(vision=False):
             name = get_model_name(name)
 
             legos.name.append(name)
-            legos.pose.append(pose)
+            # legos.pose.append(pose)
+            if noise:
+                legos.pose.append(add_noise_to_pose(pose))
+            else:
+                legos.pose.append(pose)
     return [(lego_name, lego_pose) for lego_name, lego_pose in zip(legos.name, legos.pose)]
 
 
@@ -355,6 +360,17 @@ def set_gripper(value):
 
     return action_gripper.get_result()
 
+def compute_place_distance():
+    distance = .0
+    true_legos = get_legos_pos(noise=False)
+    for l in true_legos:
+        print(l)
+        distance += math.sqrt((l[1].position.x - MODELS_INFO[l[0]]["home"][0])**2 + (l[1].position.y - MODELS_INFO[l[0]]["home"][1])**2)
+    
+    distance /= len(true_legos)
+    return distance
+
+
 
 if __name__ == "__main__":
     print("Initializing node of kinematics")
@@ -437,4 +453,8 @@ if __name__ == "__main__":
     # rospy.sleep(0.1)
     #FIXCONFIG: add path to the config in utils file
     file_path = f"{DEV_PATH}"
-    update_json_file(file_path + "status.json", {"state":"finished"})
+    # ending_pos = get_legos_pos(noise=False)
+    
+    dist = compute_place_distance()
+    threshold = 0.1
+    update_json_file(file_path + "status.json", {"state":"finished", "distance": dist,  "success": dist < threshold})

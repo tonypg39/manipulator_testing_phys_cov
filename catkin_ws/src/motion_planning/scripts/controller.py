@@ -14,27 +14,6 @@ def get_controller_state(controller_topic, timeout=None):
         control_msgs.msg.JointTrajectoryControllerState,
         timeout=timeout)
 
-class NoiseController():
-    """
-    Perform the same operations as controller with some added noise
-    """
-    def __init__(self):
-        self.controller = ArmController()
-    
-    def move(self, dx=0, dy=0, dz=0, delta_quat=Quaternion(1, 0, 0, 0), blocking=True):
-        # Inject noise in values 
-        #...
-        self.controller.move(dx,dy,dz,delta_quat,blocking)
-        
-    def move_to(self, x=None, y=None, z=None, target_quat=None, z_raise=0.0, blocking=True):
-        # Inject noise in values 
-        #...
-        self.controller.move_to(x,y,z,target_quat,z_raise,blocking)
-    
-    def get_gripper_pose(self):
-        return self.controller.get_gripper_pose()
-
-
 
 
 class ArmController:

@@ -50,7 +50,7 @@ class Sampler():
             return
         data = msg.data.split('|')
         p = (float(data[0]), float(data[1]), float(data[2]),float(data[3])) + self.last_joint_state  
-        print(p)
+        # print(p)
         # Structure of the data is: [EFx,EFy,EFz,vEF,(Joint_Angles{7}), (Joint_Velocities{7})
         self.D.append(p)
     
@@ -60,7 +60,7 @@ class Sampler():
         self.last_joint_state = data.position + data.velocity
 
     
-    def export_data(self):
+    def export_data(self, status_dict):
         # Implement the export data functionality
         ndata = np.array(self.D)
         
@@ -69,13 +69,15 @@ class Sampler():
         assert ndata.shape[-1] == 18 and len(ndata.shape) == 2
         
         #FIXCONFIG: add path to the config in utils file
-        file_path = "f{DEV_PATH}"
-        data_path = "f{DEV_PATH}eval_data/"
+        file_path = f"{DEV_PATH}"
+        data_path = f"{DEV_PATH}eval_data/"
         tp = read_json_file(file_path+"task_params.json")
         assert self.task_id == tp['task_id']
 
         dic_data = {
              "time_elapsed": time.time() - self.start_record_time,
+             "place_distance": status_dict["distance"],
+             "success": status_dict["success"],
              "data": self.D
         }
         with open(data_path +f"mov_{self.task_id}.json", 'w') as f:
@@ -104,15 +106,15 @@ if __name__ == "__main__":
     s.start_record(task_id)
     # print("Got here... after start")
     #FIXCONFIG: add path to the config in utils file
-
-    file_path = "f{DEV_PATH}"
+    d = None
+    file_path = f"{DEV_PATH}"
     while True:
         d  = read_json_file(file_path + "status.json")
         if d['state'] == "finished":
             break
         rospy.sleep(1.5)
     s.stop_record()
-    s.export_data()
+    s.export_data(d)
 
     
 

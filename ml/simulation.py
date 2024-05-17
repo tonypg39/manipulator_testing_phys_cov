@@ -2,6 +2,10 @@ import os
 import threading
 import time
 from utils import get_dev_path, read_json_file, update_json_file
+import argparse
+
+
+
 # Process
 # - Run all the roslaunch and the rosrun commands
 # (using the xterm wrapper)
@@ -73,6 +77,10 @@ def main_kill(threads):
     
 
 if __name__=="__main__":
+    cmdline = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    cmdline.add_argument('--hold', action='store_true', help='Hold the simulation after')
+    flags, unk_args = cmdline.parse_known_args()
+
     ts = main_run()
     file_path = get_dev_path()
     while True:
@@ -82,4 +90,5 @@ if __name__=="__main__":
         time.sleep(1.5)
     
     time.sleep(1)
-    main_kill(ts)
+    if not flags.hold:
+        main_kill(ts)
