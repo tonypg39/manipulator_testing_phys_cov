@@ -6,7 +6,7 @@ import copy
 import json
 import actionlib
 import control_msgs.msg
-from controller import ArmController
+from controller import ArmController, NoiseController
 from gazebo_msgs.msg import ModelStates
 from std_msgs.msg import String
 import rospy
@@ -102,6 +102,7 @@ DEFAULT_PATH_TOLERANCE = control_msgs.msg.JointTolerance()
 DEFAULT_PATH_TOLERANCE.name = "path_tolerance"
 DEFAULT_PATH_TOLERANCE.velocity = 10
 
+
 def get_gazebo_model_name(model_name, vision_model_pose):
     """
         Get the name of the model inside gazebo. It is needed for link attacher plugin.
@@ -138,6 +139,7 @@ def get_legos_pos(vision=False):
             legos.name.append(name)
             legos.pose.append(pose)
     return [(lego_name, lego_pose) for lego_name, lego_pose in zip(legos.name, legos.pose)]
+
 
 
 def straighten(model_pose, gazebo_model_name):
@@ -361,7 +363,7 @@ if __name__ == "__main__":
     rospy.loginfo("Waiting for start order...")
     rospy.wait_for_message("start_solver", String, timeout=None)
     
-    controller = ArmController()
+    controller = NoiseController()
     # Create an action client for the gripper
     action_gripper = actionlib.SimpleActionClient(
         "/gripper_controller/gripper_cmd",
@@ -419,7 +421,12 @@ if __name__ == "__main__":
         open_gripper(gazebo_model_name)
         controller.move(dz=0.15)
 
-        if controller.gripper_pose[0][1] > -0.3 and controller.gripper_pose[0][0] > 0:
+        grip_pose = controller.get_gripper_pose()
+
+        # if controller.gripper_pose[0][1] > -0.3 and controller.gripper_pose[0][0] > 0:
+        #     controller.move_to(*DEFAULT_POS, DEFAULT_QUAT)
+        
+        if grip_pose[0][1] > -0.3 and grip_pose[0][0] > 0:
             controller.move_to(*DEFAULT_POS, DEFAULT_QUAT)
 
         # increment z in order to stack lego correctly
