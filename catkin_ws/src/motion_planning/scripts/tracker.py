@@ -60,7 +60,7 @@ class Sampler():
         self.last_joint_state = data.position + data.velocity
 
     
-    def export_data(self, status_dict):
+    def export_data(self, status_dict, task_id):
         # Implement the export data functionality
         ndata = np.array(self.D)
         
@@ -76,6 +76,7 @@ class Sampler():
 
         dic_data = {
              "time_elapsed": time.time() - self.start_record_time,
+             "task_id": task_id,
              "place_distance": status_dict["distance"],
              "success": status_dict["success"],
              "data": self.D
@@ -114,7 +115,7 @@ if __name__ == "__main__":
             break
         rospy.sleep(1.5)
     s.stop_record()
-    s.export_data(d)
+    s.export_data(d,task_id)
 
     
 
