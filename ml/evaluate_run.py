@@ -48,7 +48,15 @@ if __name__ == "__main__":
         threads = main_run()
         file_path = dev_path
         while True and (time.time() - start_time < timeout):
-            d  = read_json_file(file_path + "status.json")
+            # d = read_json_file(file_path + "status.json")
+            while True:
+                try:
+                    d = read_json_file(file_path + "status.json")
+                    break  # Exit loop if file is read successfully
+                except json.JSONDecodeError as e:
+                    print(f"ERROR reading JSON: {e}. Retrying...")
+                    time.sleep(1.5)  # Wait for 2 seconds before retrying
+            
             if d['state'] == "finished":
                 break
             time.sleep(1.5)
