@@ -6,7 +6,8 @@ from pyquaternion import Quaternion
 
 noise_sigmas = {
     "pose": 0.003,
-    "controller": 0.055
+    "controller": 0.055,
+    "joint": 0.005
 }
 
 
@@ -15,6 +16,8 @@ def add_noise_to_pose(pose, mu=0,sigma=noise_sigmas['pose']):
     pose.position.y += np.random.normal(mu,sigma)
     return pose
     # pose.z += np.random.normal(mu,sigma)
+
+
 
 class NoiseController():
     """

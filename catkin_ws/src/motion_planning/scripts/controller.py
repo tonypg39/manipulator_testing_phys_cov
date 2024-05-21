@@ -6,13 +6,18 @@ import kinematics
 import control_msgs.msg
 import trajectory_msgs.msg
 from pyquaternion import Quaternion
-
+# from injection import add_noise_to_joint_angles
 
 def get_controller_state(controller_topic, timeout=None):
     return rospy.wait_for_message(
         f"{controller_topic}/state",
         control_msgs.msg.JointTrajectoryControllerState,
         timeout=timeout)
+
+def add_noise_to_joint_angles(joints, mu=0,sigma=0.005):
+    for j in range(len(joints)):
+        joints[j] += np.random.normal(mu,sigma)
+    return joints
 
 
 
@@ -106,7 +111,9 @@ class ArmController:
     def send_joints(self, x, y, z, quat, duration=1.0):  # x,y,z and orientation of lego block
         # Solve for the joint angles, select the 5th solution
         joint_states = kinematics.get_joints(x, y, z, quat.rotation_matrix)
-
+        
+        # NOISE INJECTION
+        joint_states = add_noise_to_joint_angles(joint_states)
         traj = copy.deepcopy(self.default_joint_trajectory)
 
         for _ in range(0, 2):
