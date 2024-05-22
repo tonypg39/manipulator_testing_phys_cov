@@ -18,6 +18,10 @@ def add_noise_to_pose(pose, mu=0,sigma=noise_sigmas['pose']):
     # pose.z += np.random.normal(mu,sigma)
 
 
+def add_noise_to_joint_angles(joints, mu=0,sigma=0.005):
+    for j in range(len(joints)):
+        joints[j] += np.random.normal(mu,sigma)
+    return joints
 
 class NoiseController():
     """

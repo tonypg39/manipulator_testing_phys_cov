@@ -6,8 +6,8 @@ import copy
 import json
 import actionlib
 import control_msgs.msg
-from controller import ArmController
-from injection import NoiseController, add_noise_to_pose
+from controller import ArmController, NoiseController
+from injection import add_noise_to_pose
 from gazebo_msgs.msg import ModelStates
 from std_msgs.msg import String
 import rospy
@@ -124,7 +124,7 @@ def get_model_name(gazebo_model_name):
     return gazebo_model_name.replace("lego_", "").split("_", maxsplit=1)[0]
 
 
-def get_legos_pos(vision=False, noise=True):
+def get_legos_pos(vision=False, noise=True, sigma=0.0):
     #get legos position reading vision topic
     if vision:
         legos = rospy.wait_for_message("/lego_detections", ModelStates, timeout=None)
@@ -140,7 +140,7 @@ def get_legos_pos(vision=False, noise=True):
             legos.name.append(name)
             # legos.pose.append(pose)
             if noise:
-                legos.pose.append(add_noise_to_pose(pose))
+                legos.pose.append(add_noise_to_pose(pose,sigma=sigma))
             else:
                 legos.pose.append(pose)
     return [(lego_name, lego_pose) for lego_name, lego_pose in zip(legos.name, legos.pose)]
@@ -379,7 +379,15 @@ if __name__ == "__main__":
     rospy.loginfo("Waiting for start order...")
     rospy.wait_for_message("start_solver", String, timeout=None)
     
-    controller = NoiseController()
+
+    ## Read the noise setting
+    noise_idx = rospy.get_param('noise_index', 0)
+    perception_noise = rospy.get_param('perception_noise', 0)
+    control_noise = rospy.get_param('control_noise', 0)
+    actuator_noise = rospy.get_param('actuator_noise', 0)
+    
+
+    controller = NoiseController(noise_idx&2>0,control_noise,noise_idx&3>0,actuator_noise)
     # Create an action client for the gripper
     action_gripper = actionlib.SimpleActionClient(
         "/gripper_controller/gripper_cmd",
@@ -400,7 +408,13 @@ if __name__ == "__main__":
 
     print("Waiting for detection of the models")
     rospy.sleep(0.5)
-    legos = get_legos_pos(vision=False)
+    
+
+    # Check for the noise Index in the perception position
+    if noise_idx & 1:
+        legos = get_legos_pos(vision=False, noise=True, sigma=perception_noise)
+    else:
+        legos = get_legos_pos(vision=False)
     legos.sort(reverse=True, key=lambda a: (a[1].position.x, a[1].position.y))
 
     for model_name, model_pose in legos:

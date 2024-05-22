@@ -1,4 +1,6 @@
 {
+    "ws_path": "/root/UR5-Pick-and-Place-Simulation/catkin_ws/",
     "dev_path": "/root/UR5-Pick-and-Place-Simulation/ml/dev/",
-    "test_timeout": 120
+    "test_timeout": 120,
+    "noise_sigmas": [0.001,0.002,0.03]
 }

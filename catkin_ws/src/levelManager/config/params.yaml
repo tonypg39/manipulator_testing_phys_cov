@@ -3,3 +3,9 @@ sampling_frequency: 25.0
 
 # Parameter for path
 dev_path: "/root/UR5-Pick-and-Place-Simulation/ml/dev/"
+
+noise_index: 1
+
+perception_noise:  0.003
+control_noise: 0.055
+actuator_noise: 0.005 

@@ -6,7 +6,7 @@ import kinematics
 import control_msgs.msg
 import trajectory_msgs.msg
 from pyquaternion import Quaternion
-# from injection import add_noise_to_joint_angles
+from injection import add_noise_to_joint_angles
 
 def get_controller_state(controller_topic, timeout=None):
     return rospy.wait_for_message(
@@ -14,15 +14,43 @@ def get_controller_state(controller_topic, timeout=None):
         control_msgs.msg.JointTrajectoryControllerState,
         timeout=timeout)
 
-def add_noise_to_joint_angles(joints, mu=0,sigma=0.005):
-    for j in range(len(joints)):
-        joints[j] += np.random.normal(mu,sigma)
-    return joints
 
+
+class NoiseController():
+    """
+    Perform the same operations as controller with some added noise
+    """
+    def __init__(self, control_noise, control_delta, joint_noise, joint_delta):
+        self.controller = ArmController(joint_noise=joint_noise, joint_delta=joint_delta)
+        self.control_noise = control_noise
+        self.control_delta = control_delta
+        # Noise parameters
+        self.mu = 0
+        # self.sigma = noise_sigmas['controller']
+    
+    def move(self, dx=0, dy=0, dz=0, delta_quat=Quaternion(1, 0, 0, 0), blocking=True):
+        # Inject noise in values 
+        #...
+        if self.control_noise:
+            dx = dx + self.control_delta if dx is not None else dx
+            # dy = dy + self.control_delta if dy is not None else dy
+            # dz = dz + self.control_delta if dz is not None else dz
+        self.controller.move(dx,dy,dz,delta_quat,blocking)
+        
+    def move_to(self, x=None, y=None, z=None, target_quat=None, z_raise=0.0, blocking=True):
+        # Inject noise in values 
+        #...
+        x = x + self.control_delta if x is not None else x
+        # y = y + self.control_delta if y is not None else y
+        # z = z + self.control_delta if z is not None else z
+        self.controller.move_to(x,y,z,target_quat,z_raise,blocking)
+    
+    def get_gripper_pose(self):
+        return self.controller.get_gripper_pose()
 
 
 class ArmController:
-    def __init__(self, gripper_state=0, controller_topic="/trajectory_controller"):
+    def __init__(self, gripper_state=0, controller_topic="/trajectory_controller", joint_noise=False, joint_delta=0.0):
         self.joint_names = [
             "shoulder_pan_joint",
             "shoulder_lift_joint",
@@ -36,6 +64,10 @@ class ArmController:
         self.controller_topic = controller_topic
         self.default_joint_trajectory = trajectory_msgs.msg.JointTrajectory()
         self.default_joint_trajectory.joint_names = self.joint_names
+        
+        #noise mechanism
+        self.joint_noise = joint_noise
+        self.joint_delta = joint_delta
 
         joint_states = get_controller_state(controller_topic).actual.positions
         x, y, z, rot = kinematics.get_pose(joint_states)
@@ -113,7 +145,10 @@ class ArmController:
         joint_states = kinematics.get_joints(x, y, z, quat.rotation_matrix)
         
         # NOISE INJECTION
-        joint_states = add_noise_to_joint_angles(joint_states)
+        if self.joint_noise:
+            joint_states = add_noise_to_joint_angles(joint_states,sigma=self.joint_delta)
+
+
         traj = copy.deepcopy(self.default_joint_trajectory)
 
         for _ in range(0, 2):
