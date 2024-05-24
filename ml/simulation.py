@@ -1,5 +1,6 @@
 import os
 import threading
+import subprocess
 import time
 from utils import get_dev_path, read_json_file, update_json_file
 import argparse
@@ -12,7 +13,7 @@ import argparse
 
 cmds_run = [
     {"run": "xterm", "cmd": "roslaunch levelManager lego_world.launch" , "wait": 5},
-    {"run": "os", "cmd": "rosservice call /gazebo/unpause_physics '{}'", "wait": 0},
+    {"run": "xterm", "cmd": "rosservice call /gazebo/unpause_physics '{}'", "wait": 0},
     {"run": "xterm", "cmd": "rosrun levelManager gen_lego_world.py", "wait": 3},
     {"run": "xterm", "cmd": "rosrun motion_planning get_ef.py", "wait": 0.5},
     {"run": "xterm", "cmd": "rosrun motion_planning tracker.py", "wait":1},
@@ -21,18 +22,33 @@ cmds_run = [
 
 cmds_kill = [
     {"cmd": "killall gzserver" , "wait": 1},
-    {"cmd": "killall gzclient" , "wait": 0.5},
-    {"cmd": "killall xterm" , "wait": 0.5},
+    # {"cmd": "rosnode kill -a" , "wait": 1}
+
+    # {"cmd": "killall gzclient" , "wait": 0.5},
+    # {"cmd": "killall xterm" , "wait": 0.5},
 ]
 
 kill_ids = [None]*len(cmds_run)
 
 def xterm_wrapper(cmd,k_idx):
     c = f'xterm -fa "Monospace" -fs 12 -e "{cmd}; bash" &'
+    proc = subprocess.Popen(cmd.split())
+    pid = proc.pid
+    kill_ids[k_idx] = pid
+    return pid
+
+def subprocess_wrapper(cmd, k_idx):
+    c = f'{cmd} &'
     pid = os.popen(c).read()
     kill_ids[k_idx] = pid
     return pid
 
+def subproc_wrapper(cmd, k_idx):
+    # c = f'{cmd} &'
+    proc = subprocess.Popen(cmd.split())
+    pid = proc.pid
+    kill_ids[k_idx] = pid
+    return pid
 
 def main_run():
     """Returns the threads for all the processes"""
@@ -47,7 +63,8 @@ def main_run():
         # elif c["run"] == "os":
         #     os.popen(c["cmd"])
         if c["run"] == "xterm":
-            th = threading.Thread(target=xterm_wrapper, args=(c["cmd"],i),name=f"t_{i}")
+            # th = threading.Thread(target=xterm_wrapper, args=(c["cmd"],i),name=f"t_{i}")
+            th = threading.Thread(target=subproc_wrapper, args=(c["cmd"],i),name=f"t_{i}")
             threads.append(th)
             th.start()
             if c["wait"] > 0:
@@ -67,13 +84,14 @@ def main_run():
 def main_kill(threads):
     #TODO-DEV: Look into a cleaner kill of gazebo that goes through the processes
     # Kill the gazebo processes
+    print("\n\n\n\n***\n\n\nThe IDs of the process are: ", kill_ids)
     for c in cmds_kill:
         os.popen(c["cmd"])
         if c["wait"] > 0:
             time.sleep(c["wait"])
 
-    for t in threads:
-        t.join()
+    # for t in threads:
+    #     t.join()
     
 
 if __name__=="__main__":
