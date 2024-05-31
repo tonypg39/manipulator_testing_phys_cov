@@ -4,7 +4,7 @@ import subprocess
 import time
 from utils import get_dev_path, read_json_file, update_json_file
 import argparse
-
+import psutil
 
 
 # Process
@@ -64,7 +64,7 @@ def main_run():
         #     os.popen(c["cmd"])
         if c["run"] == "xterm":
             # th = threading.Thread(target=xterm_wrapper, args=(c["cmd"],i),name=f"t_{i}")
-            th = threading.Thread(target=subproc_wrapper, args=(c["cmd"],i),name=f"t_{i}")
+            th = threading.Thread(target=subprocess_wrapper, args=(c["cmd"],i),name=f"t_{i}")
             threads.append(th)
             th.start()
             if c["wait"] > 0:
@@ -80,6 +80,24 @@ def main_run():
     print(f"Task Id: {task_id} || Type: {type(task_id)}")
     os.popen(f"rostopic pub /start_solver std_msgs/String --once '{task_id}' ")
     return threads
+
+def kill_processes():
+    # Discover the processes
+    kill_keys = ["python3", "gzserver", "rosout"]
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+        try:
+            # Match the command to find the correct process
+            if proc.info['cmdline'] and ' '.join(proc.info['cmdline']).find('python3') > -1:
+                pid = proc.info['pid']
+                name = proc.info['name']
+                cmdl = proc.info['cmdline']
+                print(f'Killing Process =>  Name: {name} |ID: {pid}')
+                os.popen(f"kill {pid}")
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            print("Could not kill the processes...")
+        
+
+    # Kill them with kill -9
 
 def main_kill(threads):
     #TODO-DEV: Look into a cleaner kill of gazebo that goes through the processes
@@ -108,5 +126,6 @@ if __name__=="__main__":
         time.sleep(1.5)
     
     time.sleep(1)
+    kill_processes()
     if not flags.hold:
         main_kill(ts)
