@@ -18,6 +18,7 @@ limits = {
 }
 
 def load_test(test):
+    """Loads the test and returns the test_id"""
     test['task_id'] = test['task_id'] + "_" + datetime.now().strftime('%Y%m%dT%H%M%S')
     # check limits
     for k,l in limits.items():
@@ -26,6 +27,8 @@ def load_test(test):
     ts = json.dumps(test)
     with open(task_params_file_path  + "task_params.json", 'w') as f:
         f.write(ts)
+    return test['task_id']
+    
 
 
 if __name__ == "__main__":
@@ -44,8 +47,8 @@ if __name__ == "__main__":
         n = len(tests["tests"])
         print(f"\n\n---\nRunning test {i}/{n}")
         start_time = time.time()
-        load_test(t)
-        threads = main_run()
+        tid = load_test(t)
+        threads = main_run(tid)
         file_path = dev_path
         while True and (time.time() - start_time < timeout):
             d  = read_json_file(file_path + "status.json")
@@ -55,4 +58,4 @@ if __name__ == "__main__":
         
         # TODO-DEV: Add a condition to check for the generated log file
         time.sleep(2)
-        main_kill(threads)
+        main_kill(threads,tid)
