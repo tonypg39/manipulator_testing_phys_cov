@@ -8,8 +8,8 @@
   <arg name="paused"     default="true"/>
   <arg name="debug"      default="false"/>
   <!-- FIXCONFIG: add headless as a parameter -->
-  <!-- <arg name="gui"        default="true"/> -->
-  <arg name="gui"        default="false"/>
+  <arg name="gui"        default="true"/>
+  <!-- <arg name="gui"        default="false"/> -->
   <arg name="rate"       default="125" />
   <arg name="world_name" default="$(find levelManager)/worlds/main_scene.world" />
   

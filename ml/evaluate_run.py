@@ -57,5 +57,6 @@ if __name__ == "__main__":
             time.sleep(1.5)
         
         # TODO-DEV: Add a condition to check for the generated log file
-        time.sleep(2)
+        time.sleep(1)
         main_kill(threads,tid)
+        time.sleep(1.5)

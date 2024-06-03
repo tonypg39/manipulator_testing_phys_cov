@@ -21,8 +21,8 @@ cmds_run = [
 
 cmds_kill = [
     {"cmd": "killall gzserver" , "wait": 1},
-    {"cmd": "killall gzclient" , "wait": 0.5},
-    {"cmd": "killall xterm" , "wait": 0.5},
+    {"cmd": "killall gzclient" , "wait": 0.5}
+    # {"cmd": "killall xterm" , "wait": 0.5},
 ]
 
 kill_ids = [None]*len(cmds_run)
@@ -75,10 +75,10 @@ def main_run(task_id):
 def main_kill(threads, task_id):
     #TODO-DEV: Look into a cleaner kill of gazebo that goes through the processes
     # Kill the gazebo processes
-    # for c in cmds_kill:
-    #     os.popen(c["cmd"])
-    #     if c["wait"] > 0:
-    #         time.sleep(c["wait"])
+    for c in cmds_kill:
+        os.popen(c["cmd"])
+        if c["wait"] > 0:
+            time.sleep(c["wait"])
     os.popen(f"tmux kill-session -t session-{task_id}")  
     # for t in threads:
     #     t.join()
