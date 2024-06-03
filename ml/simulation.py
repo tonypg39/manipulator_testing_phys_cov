@@ -34,20 +34,29 @@ def xterm_wrapper(cmd,k_idx):
     return pid
 
 
-def main_run():
+def tmux_wrapper(cmd, session, count):
+    c = f'tmux new-window -t {session}:{count} -n "window-{count}" "{cmd}"'
+    os.popen(c)
+
+
+
+def main_run(task_id):
     """Returns the threads for all the processes"""
-    file_path = get_dev_path()
+    file_path = get_dev_path()    
+
+    # if needed (headless mode), start the tmux session
+    # FIXCONFIG: set headless mode variable
+    session = f"session-{task_id}"
+    os.popen(f"tmux new-session -d -s {session}")  
+    time.sleep(1.5)
 
     update_json_file(file_path+"status.json",{"state":"running"})
     threads = []
+    
     for i,c in enumerate(cmds_run):
-        # if c["run"] == "xterm":
-        #     k = xterm_wrapper(c["cmd"])
-        #     kill_ids.append(k)
-        # elif c["run"] == "os":
-        #     os.popen(c["cmd"])
         if c["run"] == "xterm":
-            th = threading.Thread(target=xterm_wrapper, args=(c["cmd"],i),name=f"t_{i}")
+            print(f"\n\n--\nRunning command #{i}: {c['cmd']}")
+            th = threading.Thread(target=tmux_wrapper, args=(c["cmd"],session,i+2),name=f"t_{i}")
             threads.append(th)
             th.start()
             if c["wait"] > 0:
@@ -57,31 +66,37 @@ def main_run():
     
     # Give the start command
     
-    tp = read_json_file(file_path+"task_params.json")
-    task_id = tp["task_id"]
+    
     # os.popen(f"rostopic pub /start_solver std_msgs/String --once \"{task_id}\"")
     print(f"Task Id: {task_id} || Type: {type(task_id)}")
     os.popen(f"rostopic pub /start_solver std_msgs/String --once '{task_id}' ")
     return threads
 
-def main_kill(threads):
+def main_kill(threads, task_id):
     #TODO-DEV: Look into a cleaner kill of gazebo that goes through the processes
     # Kill the gazebo processes
-    for c in cmds_kill:
-        os.popen(c["cmd"])
-        if c["wait"] > 0:
-            time.sleep(c["wait"])
+    # for c in cmds_kill:
+    #     os.popen(c["cmd"])
+    #     if c["wait"] > 0:
+    #         time.sleep(c["wait"])
+    os.popen(f"tmux kill-session -t session-{task_id}")  
+    # for t in threads:
+    #     t.join()
+    
+    
 
-    for t in threads:
-        t.join()
     
 
 if __name__=="__main__":
     cmdline = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     cmdline.add_argument('--hold', action='store_true', help='Hold the simulation after')
     flags, unk_args = cmdline.parse_known_args()
+    
+    file_path = get_dev_path()
+    tp = read_json_file(file_path+"task_params.json")
+    task_id = tp["task_id"]
 
-    ts = main_run()
+    ts = main_run(task_id)
     file_path = get_dev_path()
     while True:
         d  = read_json_file(file_path + "status.json")
@@ -91,4 +106,4 @@ if __name__=="__main__":
     
     time.sleep(1)
     if not flags.hold:
-        main_kill(ts)
+        main_kill(ts,task_id)
